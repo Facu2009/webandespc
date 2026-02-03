@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armá tu PC | Andes PC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .configurator-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .questionnaire-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .questionnaire-header h1 {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+
+        .questionnaire-header p {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .question-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .question-card.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-number {
+            color: #2563eb;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-title {
+            font-size: 1.8rem;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .question-subtitle {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option-card {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .option-card:hover {
+            border-color: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+
+        .option-card.selected {
+            border-color: #2563eb;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        }
+
+        .option-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .option-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .option-description {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .text-input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .text-input-group label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .text-input-group input,
+        .text-input-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .text-input-group input:focus,
+        .text-input-group textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .text-input-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .budget-slider-container {
+            margin-bottom: 2rem;
+        }
+
+        .budget-value {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 1rem;
+        }
+
+        .budget-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #e5e7eb;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .budget-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #2563eb;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .budget-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .budget-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #2563eb;
+            cursor: pointer;
+            border: none;
+        }
+
+        .budget-labels {
+            display: flex;
+            justify-content: space-between;
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .nav-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-prev {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-prev:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-next {
+            background: #2563eb;
+            color: white;
+            margin-left: auto;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            background: #1d4ed8;
+        }
+
+        .btn-next:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+        }
+
+        .btn-submit {
+            background: #25D366;
+            color: white;
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .btn-submit:hover {
+            background: #20BA5A;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #bae6fd;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .summary-value {
+            color: #1a1a1a;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkbox-option:hover {
+            border-color: #2563eb;
+        }
+
+        .checkbox-option.selected {
+            border-color: #2563eb;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            flex: 1;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        @media (max-width: 768px) {
+            .configurator-container {
+                padding: 2rem 1rem;
+            }
+
+            .questionnaire-header h1 {
+                font-size: 2rem;
+            }
+
+            .question-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .question-title {
+                font-size: 1.5rem;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">ANDES PC</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="servicios.html">Servicios</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="configurador.html">Armá tu PC</a></li>
+                <li><a href="pedidos.html">Pedidos</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="somo.html">Quienes somos</a></li>
+            </ul>
+            <a href="https://wa.me/5492612773162" class="cta-button">Consultar</a>
+        </nav>
+    </header>
+
+    <!-- Configurator -->
+    <div class="configurator-container">
+        <div class="questionnaire-header">
+            <h1>Armá tu PC Ideal</h1>
+            <p>Respondé estas preguntas y te ayudamos a encontrar la mejor configuración</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Question 1: Uso Principal -->
+        <div class="question-card active" data-question="1">
+            <div class="question-number">Pregunta 1 de 7</div>
+            <h2 class="question-title">¿Para qué vas a usar tu PC?</h2>
+            <p class="question-subtitle">Seleccioná el uso principal</p>
+            
+            <div class="options-grid">
+                <div class="option-card" data-option="gaming">
+                    <div class="option-icon">🎮</div>
+                    <div class="option-title">Gaming</div>
+                    <div class="option-description">Juegos y entretenimiento</div>
+                </div>
+                <div class="option-card" data-option="trabajo">
+                    <div class="option-icon">💼</div>
+                    <div class="option-title">Trabajo/Oficina</div>
+                    <div class="option-description">Tareas de oficina</div>
+                </div>
+                <div class="option-card" data-option="diseño">
+                    <div class="option-icon">🎨</div>
+                    <div class="option-title">Diseño/Edición</div>
+                    <div class="option-description">Creatividad profesional</div>
+                </div>
+                <div class="option-card" data-option="programacion">
+                    <div class="option-icon">💻</div>
+                    <div class="option-title">Programación</div>
+                    <div class="option-description">Desarrollo de software</div>
+                </div>
+                <div class="option-card" data-option="multitarea">
+                    <div class="option-icon">⚡</div>
+                    <div class="option-title">Uso Mixto</div>
+                    <div class="option-description">Varios usos combinados</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 2: Nivel de Rendimiento -->
+        <div class="question-card" data-question="2">
+            <div class="question-number">Pregunta 2 de 7</div>
+            <h2 class="question-title">¿Qué nivel de rendimiento necesitás?</h2>
+            <p class="question-subtitle">Según tu uso esperado</p>
+            
+            <div class="options-grid">
+                <div class="option-card" data-option="basico">
+                    <div class="option-icon">🔵</div>
+                    <div class="option-title">Básico</div>
+                    <div class="option-description">Tareas simples y navegación</div>
+                </div>
+                <div class="option-card" data-option="intermedio">
+                    <div class="option-icon">🟢</div>
+                    <div class="option-title">Intermedio</div>
+                    <div class="option-description">Multitarea y aplicaciones</div>
+                </div>
+                <div class="option-card" data-option="alto">
+                    <div class="option-icon">🟠</div>
+                    <div class="option-title">Alto</div>
+                    <div class="option-description">Gaming y edición profesional</div>
+                </div>
+                <div class="option-card" data-option="extremo">
+                    <div class="option-icon">🔴</div>
+                    <div class="option-title">Extremo</div>
+                    <div class="option-description">Máximo rendimiento</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 3: Presupuesto -->
+        <div class="question-card" data-question="3">
+            <div class="question-number">Pregunta 3 de 7</div>
+            <h2 class="question-title">¿Cuál es tu presupuesto?</h2>
+            <p class="question-subtitle">Moviendo el control podés ajustar tu presupuesto estimado</p>
+            
+            <div class="budget-slider-container">
+                <div class="budget-value" id="budgetValue">$300.000</div>
+                <input type="range" min="300000" max="5000000" value="300000" step="50000" class="budget-slider" id="budgetSlider">
+                <div class="budget-labels">
+                    <span>$300.000</span>
+                    <span>$5.000.000</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 4: Componentes que ya tiene -->
+        <div class="question-card" data-question="4">
+            <div class="question-number">Pregunta 4 de 7</div>
+            <h2 class="question-title">¿Tenés alguno de estos componentes?</h2>
+            <p class="question-subtitle">Seleccioná los que ya tengas y podamos reutilizar</p>
+            
+            <div class="checkbox-group">
+                <label class="checkbox-option" data-component="procesador">
+                    <input type="checkbox" id="has-cpu">
+                    <span class="checkbox-label">Procesador (CPU)</span>
+                </label>
+                <label class="checkbox-option" data-component="mother">
+                    <input type="checkbox" id="has-motherboard">
+                    <span class="checkbox-label">Placa Madre (Motherboard)</span>
+                </label>
+                <label class="checkbox-option" data-component="ram">
+                    <input type="checkbox" id="has-ram">
+                    <span class="checkbox-label">Memoria RAM</span>
+                </label>
+                <label class="checkbox-option" data-component="gpu">
+                    <input type="checkbox" id="has-gpu">
+                    <span class="checkbox-label">Tarjeta Gráfica (GPU)</span>
+                </label>
+                <label class="checkbox-option" data-component="fuente">
+                    <input type="checkbox" id="has-psu">
+                    <span class="checkbox-label">Fuente de Poder</span>
+                </label>
+                <label class="checkbox-option" data-component="almacenamiento">
+                    <input type="checkbox" id="has-storage">
+                    <span class="checkbox-label">Disco/SSD</span>
+                </label>
+                <label class="checkbox-option" data-component="gabinete">
+                    <input type="checkbox" id="has-case">
+                    <span class="checkbox-label">Gabinete</span>
+                </label>
+                <label class="checkbox-option" data-component="monitor">
+                    <input type="checkbox" id="has-monitor">
+                    <span class="checkbox-label">Monitor</span>
+                </label>
+                <label class="checkbox-option" data-component="teclado">
+                    <input type="checkbox" id="has-keyboard">
+                    <span class="checkbox-label">Teclado</span>
+                </label>
+                <label class="checkbox-option" data-component="mouse">
+                    <input type="checkbox" id="has-mouse">
+                    <span class="checkbox-label">Mouse</span>
+                </label>
+                <label class="checkbox-option" data-component="ninguno">
+                    <input type="checkbox" id="has-nothing">
+                    <span class="checkbox-label">No tengo nada, necesito todo</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Question 5: Preferencia de Marca -->
+        <div class="question-card" data-question="5">
+            <div class="question-number">Pregunta 5 de 7</div>
+            <h2 class="question-title">¿Tenés preferencia de marca para el procesador?</h2>
+            <p class="question-subtitle">Podemos recomendarte según tu presupuesto</p>
+            
+            <div class="options-grid">
+                <div class="option-card" data-option="intel">
+                    <div class="option-icon" style="color: #0071C5; font-weight: 900; font-size: 2rem;">INTEL</div>
+                    <div class="option-title">Intel</div>
+                    <div class="option-description">Rendimiento confiable</div>
+                </div>
+                <div class="option-card" data-option="amd">
+                    <div class="option-icon" style="color: #ED1C24; font-weight: 900; font-size: 2rem;">AMD</div>
+                    <div class="option-title">AMD</div>
+                    <div class="option-description">Excelente relación precio/rendimiento</div>
+                </div>
+                <div class="option-card" data-option="sin-preferencia">
+                    <div class="option-icon">🤝</div>
+                    <div class="option-title">Sin Preferencia</div>
+                    <div class="option-description">Lo que sea mejor para mi presupuesto</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 6: Urgencia -->
+        <div class="question-card" data-question="6">
+            <div class="question-number">Pregunta 6 de 7</div>
+            <h2 class="question-title">¿Cuándo necesitás tu PC?</h2>
+            <p class="question-subtitle">Esto nos ayuda a buscar las mejores opciones disponibles</p>
+            
+            <div class="options-grid">
+                <div class="option-card" data-option="urgente">
+                    <div class="option-icon">⚡</div>
+                    <div class="option-title">Lo antes posible</div>
+                    <div class="option-description">Necesito stock inmediato</div>
+                </div>
+                <div class="option-card" data-option="semana">
+                    <div class="option-icon">📅</div>
+                    <div class="option-title">En 1-2 semanas</div>
+                    <div class="option-description">Puedo esperar un poco</div>
+                </div>
+                <div class="option-card" data-option="mes">
+                    <div class="option-icon">🗓️</div>
+                    <div class="option-title">En un mes</div>
+                    <div class="option-description">Sin apuro, quiero lo mejor</div>
+                </div>
+                <div class="option-card" data-option="flexible">
+                    <div class="option-icon">🕐</div>
+                    <div class="option-title">Flexible</div>
+                    <div class="option-description">Cuando consigas lo mejor</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 7: Datos de Contacto -->
+        <div class="question-card" data-question="7">
+            <div class="question-number">Pregunta 7 de 7</div>
+            <h2 class="question-title">Dejanos tus datos</h2>
+            <p class="question-subtitle">Para enviarte el presupuesto personalizado</p>
+            
+            <div class="text-input-group">
+                <label for="userName">Tu nombre</label>
+                <input type="text" id="userName" placeholder="Juan Pérez" required>
+            </div>
+
+            <div class="text-input-group">
+                <label for="userComments">Comentarios adicionales (opcional)</label>
+                <textarea id="userComments" placeholder="¿Algo más que debamos saber? Por ejemplo: juegos específicos que querés correr, programas que usás, etc."></textarea>
+            </div>
+        </div>
+
+        <!-- Summary Page -->
+        <div class="question-card" data-question="summary">
+            <div class="question-number">Resumen de tu consulta</div>
+            <h2 class="question-title">¡Perfecto! Revisá tu configuración</h2>
+            
+            <div class="summary-card">
+                <div class="summary-title">Tu PC Ideal</div>
+                <div class="summary-item">
+                    <span class="summary-label">Uso principal:</span>
+                    <span class="summary-value" id="summary-uso">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Nivel de rendimiento:</span>
+                    <span class="summary-value" id="summary-rendimiento">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Presupuesto:</span>
+                    <span class="summary-value" id="summary-presupuesto">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Ya tenés:</span>
+                    <span class="summary-value" id="summary-componentes">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Preferencia CPU:</span>
+                    <span class="summary-value" id="summary-marca">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Urgencia:</span>
+                    <span class="summary-value" id="summary-urgencia">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Nombre:</span>
+                    <span class="summary-value" id="summary-nombre">-</span>
+                </div>
+            </div>
+
+            <button class="btn-submit" id="submitBtn">
+                <i class="fa-brands fa-whatsapp"></i>
+                Enviar consulta por WhatsApp
+            </button>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation-buttons">
+            <button class="nav-btn btn-prev" id="prevBtn" style="display: none;">
+                <i class="fas fa-arrow-left"></i> Anterior
+            </button>
+            <button class="nav-btn btn-next" id="nextBtn" disabled>
+                Siguiente <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://instagram.com/tunombre" target="_blank" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://tiktok.com/@tunombre" target="_blank" title="TikTok">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Inicio</a>
+                <a href="servicios.html">Servicios</a>
+                <a href="productos.html">Productos</a>
+                <a href="contacto.html">Contacto</a>
+                <a href="somo.html">Quienes somos</a>
+                <a href="pedidos.html">Pedidos</a>
+            </div>
+            <p style="color: #9ca3af; margin-top: 2rem;">&copy; 2026 Andes PC. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/5492612773162?text=Hola,%20quiero%20consultar%20sobre..." class="whatsapp-float">💬</a>
+
+    <script src="configurador.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

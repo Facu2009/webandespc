@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos Personalizados | Andes PC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">ANDES PC</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="servicios.html">Servicios</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="configurador.html">Armá tu PC</a></li>
+                <li><a href="pedidos.html">Pedidos</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="somo.html">Quienes somos</a></li>
+            </ul>
+            <a href="https://wa.me/5492612773162" class="cta-button">Consultar</a>
+        </nav>
+    </header>
+
+    <!-- Custom Request Section -->
+    <section id="pedido-personalizado" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+        <h2 class="section-title">¿No encontrás lo que buscás?</h2>
+        <p class="section-subtitle">Conseguimos cualquier componente que necesites. Consultanos y te armamos un presupuesto personalizado.</p>
+        
+        <div class="custom-request-container">
+            <div class="custom-request-card">
+                <div class="custom-icon">🔍</div>
+                <h3>Pedidos Especiales</h3>
+                <p>Si no está en nuestro catálogo, lo conseguimos para vos. Trabajamos con múltiples proveedores para encontrar exactamente lo que necesitás.</p>
+                <ul class="custom-features">
+                    <li><i class="fa-solid fa-check"></i> Componentes específicos de cualquier marca</li>
+                    <li><i class="fa-solid fa-check"></i> Hardware para servidores y workstations</li>
+                    <li><i class="fa-solid fa-check"></i> Periféricos gaming premium</li>
+                    <li><i class="fa-solid fa-check"></i> Compras al por mayor para empresas</li>
+                </ul>
+            </div>
+            
+            <div class="custom-request-form-card">
+                <h3>Hacenos tu consulta</h3>
+                <form class="custom-form" onsubmit="handleCustomRequest(event)">
+                    <div class="form-group">
+                        <label for="nombre">Tu nombre</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="producto">¿Qué producto buscás?</label>
+                        <input type="text" id="producto" name="producto" placeholder="Ej: RTX 4090 Founders Edition" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="detalles">Detalles adicionales (opcional)</label>
+                        <textarea id="detalles" name="detalles" rows="4" placeholder="Especificaciones, marca preferida, presupuesto estimado..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">
+                        <i class="fa-brands fa-whatsapp"></i> Enviar consulta por WhatsApp
+                    </button>
+                </form>
+                
+                <p class="form-note">Te responderemos con disponibilidad y precio en menos de 24 horas</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://instagram.com/tunombre" target="_blank" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://tiktok.com/@tunombre" target="_blank" title="TikTok">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Inicio</a>
+                <a href="servicios.html">Servicios</a>
+                <a href="productos.html">Productos</a>
+                <a href="paquetes.html">Paquetes</a>
+                <a href="contacto.html">Contacto</a>
+                <a href="somo.html">Quienes somos</a>
+                <a href="pedidos.html">Pedidos</a>
+            </div>
+            <p style="color: #9ca3af; margin-top: 2rem;">&copy; 2026 Andes PC. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/5492612773162?text=Hola,%20quiero%20consultar%20sobre..." class="whatsapp-float">💬</a>
+
+    <script src="script.js"></script>
+</body>
+</html>
