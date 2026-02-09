@@ -1,15 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andes PC | Componentes y Armado de PC en Mendoza</title>
+    <title>Procesadores - Andes PC</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* CSS adicional para las imágenes */
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Estilos para el stock */
+        .stock-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .stock-disponible {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .stock-bajo {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .stock-agotado {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .stock-icon {
+            font-size: 1.1em;
+        }
+
+        .product-contact:disabled {
+            background-color: #d1d5db;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .product-card {
+            position: relative;
+        }
+
+        .badge-agotado {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #dc2626;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            z-index: 10;
+        }
+    </style>
 </head>
 <body>
-    
-</body>
     <header>
         <nav>
             <a href="index.html" class="logo">ANDES PC</a>
@@ -27,39 +88,12 @@
     </header>
 
     <section id="productos">
-        <h2 class="section-title">Componentes Destacados</h2>
+        <h2 class="section-title">Procesadores</h2>
         
         <div class="products-category">
             <h3 class="category-title">Procesadores</h3>
-            <div class="products-grid">
-                <div class="product-card">
-                    <div class="product-image">🔲</div>
-                    <div class="product-info">
-                        <div class="product-name">Intel Core i5-13400F</div>
-                        <div class="product-specs">10 núcleos, 20 hilos | Socket LGA1700</div>
-                        <div class="product-price">$185.000</div>
-                        <button class="product-contact" onclick="contactWhatsApp('Intel Core i5-13400F')">Consultar</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">🔲</div>
-                    <div class="product-info">
-                        <div class="product-name">AMD Ryzen 5 5600</div>
-                        <div class="product-specs">6 núcleos, 12 hilos | Socket AM4</div>
-                        <div class="product-price">$145.000</div>
-                        <button class="product-contact" onclick="contactWhatsApp('AMD Ryzen 5 5600')">Consultar</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <div class="product-image">🔲</div>
-                    <div class="product-info">
-                        <div class="product-name">Intel Core i7-13700K</div>
-                        <div class="product-specs">16 núcleos, 24 hilos | Socket LGA1700</div>
-                        <div class="product-price">$380.000</div>
-                        <button class="product-contact" onclick="contactWhatsApp('Intel Core i7-13700K')">Consultar</button>
-                    </div>
-                </div>
+            <div class="products-grid" id="procesadores-grid">
+                <!-- Los productos se cargarán dinámicamente desde JavaScript -->
             </div>
         </div>
     </section>
@@ -87,8 +121,10 @@
         </div>
     </footer>
 
-
     <a href="https://wa.me/5492612773162?text=Hola,%20quiero%20consultar%20sobre..." class="whatsapp-float">💬</a>
-</html>
-    
 
+    <script src="productos-database.js"></script>
+    <script src="stock-manager-v2.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
