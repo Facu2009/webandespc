@@ -41,9 +41,77 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Automatic active page detection for navigation
+// Mobile Menu Functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Get current page from URL
+    // Create mobile menu toggle button
+    const nav = document.querySelector('nav');
+    const navLinks = document.querySelector('.nav-links');
+    
+    // Create hamburger button if it doesn't exist
+    if (!document.querySelector('.mobile-menu-toggle')) {
+        const menuToggle = document.createElement('button');
+        menuToggle.className = 'mobile-menu-toggle';
+        menuToggle.setAttribute('aria-label', 'Toggle menu');
+        menuToggle.innerHTML = '<span></span><span></span><span></span>';
+        
+        // Insert before CTA button
+        const ctaButton = document.querySelector('.cta-button');
+        if (ctaButton) {
+            nav.insertBefore(menuToggle, ctaButton);
+        } else {
+            nav.appendChild(menuToggle);
+        }
+    }
+    
+    // Create overlay if it doesn't exist
+    if (!document.querySelector('.menu-overlay')) {
+        const overlay = document.createElement('div');
+        overlay.className = 'menu-overlay';
+        document.body.appendChild(overlay);
+    }
+    
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const overlay = document.querySelector('.menu-overlay');
+    
+    // Toggle menu function
+    function toggleMenu() {
+        menuToggle.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    }
+    
+    // Close menu function
+    function closeMenu() {
+        menuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    // Menu toggle click
+    menuToggle.addEventListener('click', toggleMenu);
+    
+    // Overlay click
+    overlay.addEventListener('click', closeMenu);
+    
+    // Close menu when clicking on a link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+    
+    // Close menu on window resize if open
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                closeMenu();
+            }
+        }, 250);
+    });
+    
+    // Automatic active page detection for navigation
     let currentPage = window.location.pathname.split('/').pop();
     
     // If no file specified or just a slash, default to index.html
@@ -52,9 +120,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Get all navigation links
-    const navLinks = document.querySelectorAll('.nav-links a');
+    const navLinksAnchors = document.querySelectorAll('.nav-links a');
     
-    navLinks.forEach(link => {
+    navLinksAnchors.forEach(link => {
         // Remove any existing active class first
         link.classList.remove('active');
         
