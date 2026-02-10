@@ -3,72 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Placas de Video - Andes PC</title>
+    <title>Placas de Video | Andes PC</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* CSS adicional para las imágenes */
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* Estilos para el stock */
-        .stock-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 10px 0;
-            padding: 8px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.9em;
-        }
-
-        .stock-disponible {
-            background-color: #d1fae5;
-            color: #065f46;
-        }
-
-        .stock-bajo {
-            background-color: #fef3c7;
-            color: #92400e;
-        }
-
-        .stock-agotado {
-            background-color: #fee2e2;
-            color: #991b1b;
-        }
-
-        .stock-icon {
-            font-size: 1.1em;
-        }
-
-        .product-contact:disabled {
-            background-color: #d1d5db;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        .product-card {
-            position: relative;
-        }
-
-        .badge-agotado {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #dc2626;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: bold;
-            z-index: 10;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -89,12 +26,14 @@
 
     <section id="productos">
         <h2 class="section-title">Placas de Video</h2>
+        <p class="section-subtitle">NVIDIA y AMD</p>
         
+        <div id="loading" class="loading-message" style="text-align: center; padding: 3rem; color: #6b7280;">
+            <i class="fas fa-spinner fa-spin"></i> Cargando productos...
+        </div>
+
         <div class="products-category">
-            <h3 class="category-title">Placas de Video</h3>
-            <div class="products-grid" id="gpu-grid">
-                <!-- Los productos se cargarán dinámicamente desde JavaScript -->
-            </div>
+            <div class="products-grid" id="productsContainer"></div>
         </div>
     </section>
 
@@ -112,7 +51,6 @@
                 <a href="index.html">Inicio</a>
                 <a href="servicios.html">Servicios</a>
                 <a href="productos.html">Productos</a>
-                <a href="paquetes.html">Paquetes</a>
                 <a href="contacto.html">Contacto</a>
                 <a href="somo.html">Quienes somos</a>
                 <a href="pedidos.html">Pedidos</a>
@@ -123,8 +61,71 @@
 
     <a href="https://wa.me/5492612773162?text=Hola,%20quiero%20consultar%20sobre..." class="whatsapp-float">💬</a>
 
-    <script src="productos-database.js"></script>
-    <script src="stock-manager-v2.js"></script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, getDocs, query, where, orderBy } 
+            from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY_AQUI",
+            authDomain: "tu-proyecto.firebaseapp.com",
+            projectId: "tu-proyecto",
+            storageBucket: "tu-proyecto.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abc123"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function cargarGPU() {
+            try {
+                const loadingEl = document.getElementById('loading');
+                const containerEl = document.getElementById('productsContainer');
+
+                const productosRef = collection(db, 'productos');
+                const q = query(
+                    productosRef, 
+                    where('categoria', '==', 'gpu'),
+                    where('stock', '>', 0),
+                    orderBy('stock'),
+                    orderBy('nombre')
+                );
+                const querySnapshot = await getDocs(q);
+
+                loadingEl.style.display = 'none';
+
+                if (querySnapshot.empty) {
+                    containerEl.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #6b7280;"><p style="font-size: 1.2rem;">📦 No hay placas de video disponibles</p></div>';
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const producto = doc.data();
+                    const stockClass = producto.stock <= 3 ? 'low-stock' : '';
+                    const stockText = producto.stock <= 3 ? `⚠️ Últimas ${producto.stock} unidades` : `✓ Stock: ${producto.stock} unidades`;
+
+                    containerEl.innerHTML += `
+                        <div class="product-card">
+                            <div class="product-image">${producto.emoji || '🎮'}</div>
+                            <div class="product-info">
+                                <div class="product-name">${producto.nombre}</div>
+                                <div class="product-specs">${producto.especificaciones || ''}</div>
+                                <div class="product-price">$${producto.precio.toLocaleString('es-AR')}</div>
+                                <div class="product-stock ${stockClass}" style="margin-bottom: 1rem; font-size: 0.9rem; color: ${producto.stock <= 3 ? '#dc2626' : '#059669'}; font-weight: 500;">${stockText}</div>
+                                <button class="product-contact" onclick="contactWhatsApp('${producto.nombre}')"><i class="fab fa-whatsapp"></i> Consultar</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('loading').innerHTML = '<div style="color: #dc2626;"><i class="fas fa-exclamation-triangle"></i> Error al cargar productos</div>';
+            }
+        }
+
+        cargarGPU();
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
