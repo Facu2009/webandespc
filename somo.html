@@ -1,15 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andes PC | Componentes y Armado de PC en Mendoza</title>
+    <title>Quiénes Somos | Andes PC</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="Logo_Tienda_Ecológica_Minimalista_Beige-removebg-preview.png">
+    <style>
+        /* Estilos específicos para la página "Quiénes Somos" - Responsive */
+        
+        .about-section {
+            padding: 4rem 2rem;
+            background: white;
+        }
+        
+        .about-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .about-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 3rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .about-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .about-icon {
+            font-size: 4rem;
+            flex-shrink: 0;
+        }
+        
+        .about-title {
+            color: #1e40af;
+            font-size: 1.8rem;
+            margin: 0;
+            line-height: 1.3;
+        }
+        
+        .about-text {
+            color: #475569;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-title {
+            color: #1e40af;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-description {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        
+        /* RESPONSIVE - TABLET */
+        @media (max-width: 768px) {
+            .about-section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .about-card {
+                padding: 2rem;
+            }
+            
+            .about-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .about-icon {
+                font-size: 3.5rem;
+            }
+            
+            .about-title {
+                font-size: 1.5rem;
+            }
+            
+            .about-text {
+                font-size: 1rem;
+            }
+            
+            .about-features {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+        
+        /* RESPONSIVE - MÓVIL */
+        @media (max-width: 480px) {
+            .about-section {
+                padding: 2rem 1rem;
+            }
+            
+            .about-card {
+                padding: 1.5rem;
+                border-radius: 12px;
+            }
+            
+            .about-icon {
+                font-size: 3rem;
+            }
+            
+            .about-title {
+                font-size: 1.3rem;
+            }
+            
+            .about-text {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin-bottom: 1.2rem;
+            }
+            
+            .about-features {
+                margin-top: 2rem;
+            }
+            
+            .feature-icon {
+                font-size: 2rem;
+            }
+            
+            .feature-title {
+                font-size: 1rem;
+            }
+            
+            .feature-description {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    
-</body>
     <header>
         <nav>
             <a href="index.html" class="logo">ANDES PC</a>
@@ -26,52 +177,52 @@
         </nav>
     </header>
 
-    <section style="padding: 5rem 2rem; background: white;">
-        <div style="max-width: 900px; margin: 0 auto;">
+    <section class="about-section">
+        <div class="about-container">
             <h2 class="section-title">Quiénes Somos</h2>
-            <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 3rem; border-radius: 15px; margin-top: 3rem;">
-                <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem;">
-                    <div style="font-size: 4rem;">🏔️</div>
+            
+            <div class="about-card">
+                <div class="about-header">
+                    <div class="about-icon">🏔️</div>
                     <div>
-                        <h3 style="color: #1e40af; font-size: 1.8rem; margin-bottom: 1rem;">Un emprendimiento mendocino con pasión por la tecnología</h3>
+                        <h3 class="about-title">Un emprendimiento mendocino con pasión por la tecnología</h3>
                     </div>
                 </div>
                 
-                <p style="color: #475569; font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                <p class="about-text">
                     Somos un pequeño emprendimiento de Mendoza especializado en componentes y accesorios para PC. Nos apasiona la tecnología y entendemos que cada usuario tiene necesidades únicas.
                 </p>
                 
-                <p style="color: #475569; font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                <p class="about-text">
                     Ofrecemos atención personalizada para quienes quieren armar su propia PC, asesorándolos en la elección de cada componente según su presupuesto y necesidades. Ya sea que busques una PC para gaming, trabajo, edición de video o streaming, te ayudamos a encontrar la mejor combinación.
                 </p>
                 
-                <p style="color: #475569; font-size: 1.15rem; line-height: 1.8; margin-bottom: 2rem;">
+                <p class="about-text">
                     Además, nuestro servicio de limpieza y mantenimiento preventivo está disponible para mantener tu computadora funcionando como el primer día.
                 </p>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2.5rem;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💙</div>
-                        <h4 style="color: #1e40af; margin-bottom: 0.5rem;">Atención personalizada</h4>
-                        <p style="color: #64748b; font-size: 0.95rem;">Te asesoramos sin apuro</p>
+                <div class="about-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">💙</div>
+                        <h4 class="feature-title">Atención personalizada</h4>
+                        <p class="feature-description">Te asesoramos sin apuro</p>
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🤝</div>
-                        <h4 style="color: #1e40af; margin-bottom: 0.5rem;">Compromiso local</h4>
-                        <p style="color: #64748b; font-size: 0.95rem;">Emprendimiento mendocino</p>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🤝</div>
+                        <h4 class="feature-title">Compromiso local</h4>
+                        <p class="feature-description">Emprendimiento mendocino</p>
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚡</div>
-                        <h4 style="color: #1e40af; margin-bottom: 0.5rem;">Respuesta rápida</h4>
-                        <p style="color: #64748b; font-size: 0.95rem;">Siempre disponibles</p>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <h4 class="feature-title">Respuesta rápida</h4>
+                        <p class="feature-description">Siempre disponibles</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-
-
 
     <footer>
         <div class="footer-content">
@@ -87,7 +238,6 @@
                 <a href="index.html">Inicio</a>
                 <a href="servicios.html">Servicios</a>
                 <a href="productos.html">Productos</a>
-                <a href="paquetes.html">Paquetes</a>
                 <a href="contacto.html">Contacto</a>
                 <a href="somo.html">Quienes somos</a>
                 <a href="pedidos.html">Pedidos</a>
@@ -96,10 +246,8 @@
         </div>
     </footer>
 
-
-
-
     <a href="https://wa.me/5492612773162?text=Hola,%20quiero%20consultar%20sobre..." class="whatsapp-float">💬</a>
+    
     <script src="script.js"></script>
-
+</body>
 </html>
